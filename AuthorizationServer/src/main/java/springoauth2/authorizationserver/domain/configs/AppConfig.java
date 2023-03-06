@@ -72,6 +72,7 @@ public class AppConfig {
                 .scope(scope1)
                 .scope(scope2)
                 .scope("photo")
+                .scope("info")
                 .scope("friend")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofSeconds(1L)).build())

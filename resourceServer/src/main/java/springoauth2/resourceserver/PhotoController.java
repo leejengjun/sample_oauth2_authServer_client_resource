@@ -1,11 +1,14 @@
 package springoauth2.resourceserver;
 
+import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PhotoController {
@@ -34,5 +37,14 @@ public class PhotoController {
                 .photoDescription(description)
                 .userId(user1)
                 .build();
+    }
+
+    @GetMapping("/tokenExpire")
+    public Map<String, Object> tokenExpire(){
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("error",new OAuth2Error("invalid token", "token is expired", null));
+
+        return result;
     }
 }

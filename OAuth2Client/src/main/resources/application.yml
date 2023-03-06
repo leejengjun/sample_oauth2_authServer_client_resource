@@ -19,4 +19,4 @@ spring:
             client-name: giantStep-oauth2-client-app
             client-secret: 1234
             redirect-uri: http://127.0.0.1:8081/login/oauth2/code/springoauth2
-            scope: openid, read, write, photo, friend
+            scope: openid, read, write, photo, friend, info

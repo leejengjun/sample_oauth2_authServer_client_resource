@@ -50,6 +50,56 @@
                 .catch((error) => console.log("error:", error));
         }
 
+        function infos() {
+            fetch("http://localhost:8083/infos", {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("access_token")
+                }
+            })
+                .then(response => {
+                    response.json().then(function (data) {
+                        for (const prop in data) {
+                            document.querySelector("#remotePhotos").append(data[prop].userId);
+                            document.querySelector("#remotePhotos").append(data[prop].infoId);
+                            document.querySelector("#remotePhotos").append(data[prop].infoTitle);
+                            document.querySelector("#remotePhotos").append(data[prop].infoDescription);
+                            document.querySelector("#remotePhotos").append(document.createElement('br'));
+                        }
+                    })
+                })
+        }
+
+        function myInfo() {
+            fetch("http://localhost:8083/myInfo", {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("access_token")
+                }
+            })
+                .then(response => {
+                    response.json().then(function (data) {
+                        let infos = data["infos"];
+                        let friends = data["friends"];
+                        for (let i = 0; i < infos.length; i++) {
+                            document.querySelector("#albums").append(infos[i].infoId);
+                            document.querySelector("#albums").append(infos[i].userId);
+                            document.querySelector("#albums").append(infos[i].infoTitle);
+                            document.querySelector("#albums").append(infos[i].infoDescription);
+                            document.querySelector("#albums").append(document.createElement('br'));
+                        }
+
+                        for (let i = 0; i < friends.length; i++) {
+                            document.querySelector("#friends").append(friends[i].name);
+                            document.querySelector("#friends").append(friends[i].age);
+                            document.querySelector("#friends").append(friends[i].gender);
+                            document.querySelector("#friends").append(document.createElement('br'));
+                        }
+                    })
+                })
+                .catch((error) => console.log("error:", error));
+        }
+
         function tokenExpire() {
             fetch("/tokenExpire?token=" + localStorage.getItem("access_token"),
                 {
@@ -89,6 +139,8 @@
     <a>여기 온거면 액세스 토큰이 발급된겁니다~</a>
     <p><input type="button" onclick="photos()" value="Photos" />
     <p><input type="button" onclick="remotePhotos()" value="Remote Photos" />
+    <p><input type="button" onclick="infos()" value="Infos"/>
+    <p><input type="button" onclick="myInfo()" value="MyInfo"/>
     <p><input type="button" onclick="tokenExpire()" value="tokenExpire"/>
 </form>
 <div id="photos"></div>
